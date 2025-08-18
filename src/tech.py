@@ -1,56 +1,73 @@
 import requests
 
-def get_y_combinator_stories(stories=5):
-    response = requests.get(
-        url="https://hacker-news.firebaseio.com/v0/topstories.json"
-    )
+class TechNewsBase:
+    """Base class for fetching and printing tech news."""
+
+    def fetch_json(self, url: str) -> dict:
+        """Helper to fetch JSON from APIs."""
+        return requests.get(url).json()
     
-    ids = response.json()
-    top_stories = []
+class HackerNews(TechNewsBase):
+    def __init__(self, story_count: int):
+        self.url="https://hacker-news.firebaseio.com/v0/topstories.json"
+        self.story_count = story_count
 
-    for story in range(stories):
-        story_id = ids[story]
-        response = requests.get(
-            url=f"https://hacker-news.firebaseio.com/v0/item/{story_id}.json"
-        )
-        item = response.json()
-        s = {
-            "by" : item["by"],
-            "title" : item["title"],
-            "url" : item["url"]
+    def get_news(self):
+        news_data = self.fetch_json(self.url)
+        top_stories = []
 
-        }
-        top_stories.append(s)
+        for story in range(self.story_count):
+            story_id = news_data[story]
+            response = requests.get(
+                url=f"https://hacker-news.firebaseio.com/v0/item/{story_id}.json"
+            )
+            item = response.json()
+            s = {
+                "by" : item["by"],
+                "title" : item["title"],
+                "url" : item["url"]
 
-    return top_stories
-
-def get_techcrunch_articles(articles=5):
-    response = requests.get(f"https://techcrunch.com/wp-json/wp/v2/posts?per_page={articles}")
-    articles = response.json()
-
-    top_articles = []
-
-    for article in articles:
-        a = {
-            "title": article['title']['rendered'],
-            "link": article['link'],
-            "date": article['date']
-        }
-        top_articles.append(a)
-   
-    return top_articles
+            }
+            top_stories.append(s)
+        return top_stories
     
+    def print_news(self):
+        news = self.get_news()
+        print("\nY Combinator:")
+        for i, story in enumerate(news):
+            print(f"{i+1}. {story['title']} - {story['url']}")
 
+class TechCrunch(TechNewsBase):
+    def __init__(self, story_count: int):
+        self.url=f"https://techcrunch.com/wp-json/wp/v2/posts?per_page={story_count}"
 
-def get_tech_news(time_period=1):
-    y_combinator_stories = get_y_combinator_stories()
-    techcrunch_articles = get_techcrunch_articles()
+    def get_news(self):
+        news_data = self.fetch_json(self.url)
+        top_stories = []
 
-    print("Y Combinator:")
-    for i, story in enumerate(y_combinator_stories):
-        print(f"{i+1}. {story['title']} - {story['url']}\n")
+        for article in news_data:
+            a = {
+                "title": article['title']['rendered'],
+                "link": article['link'],
+                "date": article['date']
+            }
+            top_stories.append(a)
+    
+        return top_stories
+    
+    def print_news(self):
+        news = self.get_news()
+        print("\nTech Crunch:")
+        for i, article in enumerate(news):
+            print(f"{i+1}. {article['title']} - {article['link']}\nPublished: {article['date']}")
 
-    print("Tech Crunch:")
-    for i, article in enumerate(techcrunch_articles):
-        print(f"{i+1}. {article['title']} - {article['link']}\nPublished: {article['date']}\n")
+class TechNews:
+    """Main orchestrator to fetch all tech news."""
 
+    def __init__(self, story_count: int):
+        self.hacker_news = HackerNews(story_count=story_count)
+        self.tech_crunch = TechCrunch(story_count=story_count)
+
+    def display_all(self):
+        self.hacker_news.print_news()
+        self.tech_crunch.print_news()

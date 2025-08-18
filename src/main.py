@@ -19,7 +19,8 @@ def generate_news_summary():
     print("-------------------------------------------")
     print("                 TECH")
     print("-------------------------------------------")
-    tech.get_tech_news()
+    tech_news = tech.TechNews(story_count=5)
+    tech_news.display_all()
 
     pass
 

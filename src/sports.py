@@ -141,10 +141,8 @@ class SportsNews:
     """Main orchestrator to fetch all sports news."""
 
     def __init__(self, nfl_team_name: str, nfl_team_abbr: str):
-        # NFL requires a favorite team
         self.nfl = NFLNews(team_name=nfl_team_name, team_abbr=nfl_team_abbr)
 
-        # These don’t need parameters yet
         self.ufc = UFCNews()
         self.epl = EPLNews()
 
