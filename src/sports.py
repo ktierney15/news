@@ -109,12 +109,13 @@ class EPLNews(SportsNewsBase):
 
     def print_matches(self):
         data = self.fetch_json(self.scoreboard_url)
-        print(f"Today's EPL Matches ({datetime.utcnow().date()}):")
+        print(f"Upcoming EPL Matches:")
 
         for event in data.get("events", []):
             comps = event["competitions"][0]["competitors"]
             match_name = " vs ".join([c["team"]["displayName"] for c in comps])
-            print(f"- {match_name}")
+            date = event["date"]
+            print(f"- {match_name} -- {date}")
 
             for c in comps:
                 team_name = c["team"]["displayName"]
