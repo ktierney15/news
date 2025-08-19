@@ -1,10 +1,17 @@
 import tech
 import sports
+import weather
 
 
 
 def generate_news_summary():
     """Aggregates news topics that you like and return output"""
+    # Weather
+    print("-------------------------------------------")
+    print("                 WEATHER")
+    print("-------------------------------------------")
+    current_weather = weather.WeatherData(longitude=-74.0, latitude=40.7) # NYC
+    current_weather.print_current_weather()
 
     # World News
 
