@@ -4,7 +4,7 @@ import click
 
 @click.command()
 
-def main(string, file, input):
+def main():
     ''' Entrypoint for CLI tool '''
 
 
