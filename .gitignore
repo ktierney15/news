@@ -2,3 +2,13 @@ notes.txt
 
 
 config.py
+
+.venv
+*.egg-info
+uv.lock
+
+.vscode
+
+
+build
+dist

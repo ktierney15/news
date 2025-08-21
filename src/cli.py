@@ -1,10 +1,7 @@
 import json
 import click
 
-import tech
-import sports
-import weather
-import world
+from . import tech, sports, weather, world
 
 
 
