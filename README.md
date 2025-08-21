@@ -1,5 +1,5 @@
 # news
-Over-Engineered Python client to get news (Tech, Sports, Politics, etc...)
+Python client to get news (Tech, Sports, Politics, etc...)
 
 ## Setup
 
