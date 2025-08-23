@@ -12,3 +12,4 @@ uv.lock
 
 build
 dist
+*.spec
