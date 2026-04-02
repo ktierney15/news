@@ -1,5 +1,6 @@
 import requests
 from datetime import datetime, timezone
+from utils import hyperlink
 
 class SportsNewsBase:
     """Base class for fetching and printing sports news."""
@@ -49,7 +50,7 @@ class NFLNews(SportsNewsBase):
         for i, article in enumerate(news_data.get("articles", []), 1):
             title = article.get("headline")
             link = article.get("links", {}).get("web", {}).get("href")
-            print(f"{i}. {title} - {link}")
+            print(f"{i}. {hyperlink(link, title)}")
         print()
 
     def display(self):
@@ -93,7 +94,7 @@ class UFCNews(SportsNewsBase):
         for i, article in enumerate(news_data.get("articles", []), 1):
             title = article.get("headline")
             link = article.get("links", {}).get("web", {}).get("href")
-            print(f"{i}. {title} - {link}")
+            print(f"{i}. {hyperlink(link, title)}")
         print()
 
     def display(self):
@@ -130,7 +131,7 @@ class EPLNews(SportsNewsBase):
         for i, article in enumerate(news_data.get("articles", []), 1):
             title = article.get("headline")
             link = article.get("links", {}).get("web", {}).get("href")
-            print(f"{i}. {title} - {link}")
+            print(f"{i}. {hyperlink(link, title)}")
         print()
 
     def display(self):

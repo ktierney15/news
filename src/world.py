@@ -1,5 +1,6 @@
 import feedparser
 from datetime import datetime, timezone
+from utils import hyperlink
 
 class GetNews:
     def __init__(self, feed_url, name, category):
@@ -29,7 +30,7 @@ class GetNews:
             count = 0
             for item in news:
                 count += 1
-                print(f"{count}. {item[0]} - {item[1]}")
+                print(f"{count}. {hyperlink(item[1], item[0])}")
         else:
             print(f"No {self.name} published today.")
             

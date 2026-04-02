@@ -1,4 +1,6 @@
 import requests
+from utils import hyperlink
+
 
 class TechNewsBase:
     """Base class for fetching and printing tech news."""
@@ -35,7 +37,7 @@ class HackerNews(TechNewsBase):
         news = self.get_news()
         print("\nY Combinator:")
         for i, story in enumerate(news):
-            print(f"{i+1}. {story['title']} - {story['url']}")
+            print(f"{i+1}. {hyperlink(story['url'], story['title'])}")
 
 class TechCrunch(TechNewsBase):
     def __init__(self, story_count: int):
@@ -59,7 +61,7 @@ class TechCrunch(TechNewsBase):
         news = self.get_news()
         print("\nTech Crunch:")
         for i, article in enumerate(news):
-            print(f"{i+1}. {article['title']} - {article['link']}\nPublished: {article['date']}")
+            print(f"{i+1}. {hyperlink(article['link'], article['title'])}\nPublished: {article['date']}")
 
 class TechNews:
     """Main orchestrator to fetch all tech news."""
